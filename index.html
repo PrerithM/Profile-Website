@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Glass Mechanical Watch — Hero Element</title>
+
+  <!-- Tailwind CDN for quick styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-gradient-to-b from-slate-900 via-slate-950 to-black min-h-screen flex items-center justify-center p-6">
+  <main class="w-full max-w-3xl flex items-center justify-center">
+    <!-- Watch wrapper -->
+    <section id="watch-hero" class="relative">
+      <!-- Elegant label (optional) -->
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 text-center">
+        <h1 class="text-sm tracking-widest text-slate-400">PROTOTYPE</h1>
+        <p class="mt-1 text-3xl font-semibold text-white">Sapphire Glass Mechanical — Hero Prototype</p>
+      </div>
+
+      <!-- Round case -->
+      <div
+        id="case"
+        class="relative rounded-full w-[480px] h-[480px] flex items-center justify-center"
+        style="--glass: rgba(255,255,255,0.06);"
+        aria-label="Glass mechanical watch prototype"
+      >
+        <!-- Outer bezel -->
+        <div class="absolute inset-0 rounded-full ring-1 ring-slate-700/60 shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex items-center justify-center">
+          <!-- thin metal bezel -->
+          <div class="absolute rounded-full w-[98%] h-[98%] border border-slate-600/20"
+               style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);"></div>
+        </div>
+
+        <!-- Glass reflections -->
+        <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute -top-10 -left-8 w-52 h-40 bg-gradient-to-br from-white/12 via-transparent to-transparent rounded-full blur-3xl opacity-60 transform rotate-12"></div>
+          <div class="absolute bottom-10 right-6 w-40 h-24 bg-gradient-to-tl from-white/6 via-transparent to-transparent rounded-full blur-2xl opacity-50"></div>
+          <div class="absolute inset-0 rounded-full border border-white/6 mix-blend-overlay"></div>
+        </div>
+
+        <!-- the SVG mechanical watch (no background scenery) -->
+        <div class="relative w-[86%] h-[86%] rounded-full overflow-visible">
+          <svg id="watch-svg" viewBox="-220 -220 440 440" class="w-full h-full" role="img" aria-hidden="false">
+            <defs>
+              <!-- glass gradient for gears -->
+              <radialGradient id="glassGrad" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
+                <stop offset="40%" stop-color="rgba(255,255,255,0.25)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.06)"/>
+              </radialGradient>
+
+              <!-- subtle metallic for hands -->
+              <linearGradient id="handGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#f8f7f4"/>
+                <stop offset="1" stop-color="#d6d3ce"/>
+              </linearGradient>
+
+              <!-- inner shadow filter -->
+              <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.4"/>
+              </filter>
+
+              <!-- subtle bloom for glass -->
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+
+              <!-- dial tick -->
+              <g id="tick">
+                <rect x="-1.5" y="-180" width="3" height="16" rx="1.5" fill="rgba(255,255,255,0.9)"/>
+              </g>
+            </defs>
+
+            <!-- ticks (12) -->
+            <g id="ticks" opacity="0.95">
+              <!-- generate ticks via JS for crispness; fallback static ticks for no-JS -->
+              <use href="#tick" transform="rotate(0)"/>
+              <use href="#tick" transform="rotate(30)"/>
+              <use href="#tick" transform="rotate(60)"/>
+              <use href="#tick" transform="rotate(90)"/>
+              <use href="#tick" transform="rotate(120)"/>
+              <use href="#tick" transform="rotate(150)"/>
+              <use href="#tick" transform="rotate(180)"/>
+              <use href="#tick" transform="rotate(210)"/>
+              <use href="#tick" transform="rotate(240)"/>
+              <use href="#tick" transform="rotate(270)"/>
+              <use href="#tick" transform="rotate(300)"/>
+              <use href="#tick" transform="rotate(330)"/>
+            </g>
+
+            <!-- GEAR GROUPS (generated and controlled by JS) -->
+            <g id="gears" filter="url(#glow)"></g>
+
+            <!-- center pivot & hands -->
+            <g id="hands" transform="translate(0,0)" style="transform-origin: 0px 0px;">
+              <!-- minute hand -->
+              <g id="minute" class="hand" transform="">
+                <path d="M -6 -120 L 6 -120 L 4 12 L -4 12 Z" fill="url(#handGrad)" stroke="rgba(0,0,0,0.12)" stroke-width="0.5" />
+                <rect x="-1.2" y="-18" width="2.4" height="48" rx="1.2" fill="rgba(0,0,0,0.06)"/>
+              </g>
+
+              <!-- hour hand -->
+              <g id="hour" class="hand" transform="">
+                <path d="M -7 -84 L 7 -84 L 5 10 L -5 10 Z" fill="url(#handGrad)" stroke="rgba(0,0,0,0.12)" stroke-width="0.5" />
+                <rect x="-1.2" y="-14" width="2.4" height="36" rx="1.2" fill="rgba(0,0,0,0.06)"/>
+              </g>
+
+              <!-- center cap (polished) -->
+              <circle cx="0" cy="0" r="8" fill="#fff" opacity="0.98" stroke="rgba(0,0,0,0.06)" stroke-width="0.6"/>
+              <circle cx="0" cy="0" r="4" fill="#111827" opacity="0.05"/>
+            </g>
+
+          </svg>
+        </div>
+
+        <!-- subtle controls / caption -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center w-full px-4">
+          <div class="inline-flex items-center gap-3 bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm border border-white/6">
+            <span class="text-xs text-slate-300">Interactive prototype • Solid glass gears • Real mesh ratios</span>
+            <button id="toggle-spin" class="ml-3 px-3 py-1 text-xs rounded-md bg-white/6 text-white hover:bg-white/10">Pause</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
