@@ -6,6 +6,12 @@
 export const PHI = 1.618;
 
 /**
+ * Base path for GitHub Pages deployment.
+ * Resolves to '/Profile-Website' in production, '' locally.
+ */
+export const BASE_PATH = process.env.NODE_ENV === "production" ? "/Profile-Website" : "";
+
+/**
  * Golden Ratio Spacing Scale
  * Base: 8px × φ progression
  */
@@ -73,7 +79,7 @@ export const GEAR_MATERIAL = {
  * Environment Lighting Setup
  */
 export const LIGHTING = {
-  HDRI_PATH: "/hdr/studio-lighting.hdr",
+  HDRI_PATH: `${BASE_PATH}/hdr/studio-lighting.hdr`,
   // Intensity levels for different lights
   KEY_LIGHT_INTENSITY: 1.2,
   RIM_LIGHT_INTENSITY: 0.7,
@@ -84,8 +90,8 @@ export const LIGHTING = {
  * 3D Model Paths
  */
 export const MODEL_PATHS = {
-  GEAR_CENTRAL: "./models/gear-central.glb",
-  GEAR_EXTERNAL: "./models/gear-external.glb",
+  GEAR_CENTRAL: `${BASE_PATH}/models/gear-central.glb`,
+  GEAR_EXTERNAL: `${BASE_PATH}/models/gear-external.glb`,
 };
 
 /**
