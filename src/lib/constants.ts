@@ -84,8 +84,8 @@ export const LIGHTING = {
  * 3D Model Paths
  */
 export const MODEL_PATHS = {
-  GEAR_CENTRAL: "/models/gear-central.glb",
-  GEAR_EXTERNAL: "/models/gear-external.glb",
+  GEAR_CENTRAL: "./models/gear-central.glb",
+  GEAR_EXTERNAL: "./models/gear-external.glb",
 };
 
 /**
