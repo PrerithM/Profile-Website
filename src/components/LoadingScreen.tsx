@@ -8,6 +8,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { BASE_PATH } from "@/lib/constants";
 
 export default function LoadingScreen() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -89,7 +90,13 @@ export default function LoadingScreen() {
         className="loading-name-row select-none"
         style={{ opacity: 0 }}
       >
-        <span ref={nameRef} className="loading-name-base">Prerith.M</span>
+        <span 
+          ref={nameRef} 
+          className="loading-name-base"
+          style={{ backgroundImage: `url(${BASE_PATH}/backgrounds/hero-bg.png)` }}
+        >
+          Prerith.M
+        </span>
         <span ref={suffixRef} className="loading-name-suffix" aria-hidden="true" />
       </div>
     </div>
