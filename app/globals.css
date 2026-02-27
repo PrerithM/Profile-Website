@@ -110,7 +110,6 @@ button {
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
-  background-image: url(/backgrounds/hero-bg.png);
   background-size: cover;
   background-position: center;
   -webkit-background-clip: text;
@@ -133,7 +132,6 @@ button {
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
-  background-image: url(/backgrounds/hero-bg.png);
   background-size: 300% 300%;
   background-position: center;
   -webkit-background-clip: text;
