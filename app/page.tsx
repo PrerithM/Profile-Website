@@ -17,9 +17,11 @@ export default function Home() {
     setMounted(true);
   }, []);
 
+  const isDev = process.env.NODE_ENV === "development";
+
   return (
     <>
-      {mounted && (
+      {mounted && isDev && (
         <div
           style={{
             position: "fixed",
