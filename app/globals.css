@@ -1,0 +1,890 @@
+/* ============================================================
+   globals.css — Portfolio Design System
+   IMPORTANT: @import MUST be first — Tailwind v4 requirement
+   ============================================================ */
+
+@import "tailwindcss";
+
+
+/* ============================================================
+   Custom Properties (CSS Variables)
+   ============================================================ */
+:root {
+  /* Golden Ratio Spacing (8px × φ progression) */
+  --space-1: 0.5rem;    /* 8px */
+  --space-2: 0.8125rem; /* 13px */
+  --space-3: 1.3125rem; /* 21px */
+  --space-4: 2.125rem;  /* 34px */
+  --space-5: 3.4375rem; /* 55px */
+  --space-6: 5.5625rem; /* 89px */
+  --space-7: 9rem;      /* 144px */
+
+  /* Colors */
+  --c-black: #000000;
+  --c-dark: #0a0a0a;
+  --c-surface: #111111;
+  --c-white: #ffffff;
+  --c-silver: #e8e8e8;
+  --c-muted: #a0a0a0;
+  --c-faint: #444444;
+  --c-gold: #d4af37;
+  --c-blue: #7dd3fc;
+  --c-violet: #a78bfa;
+
+  /* Typography */
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-inout: cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* ============================================================
+   Base Reset
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Required for full-page snap scroll */
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  overflow-y: hidden; /* scroll-container handles scrolling */
+  line-height: 1.6;
+  height: 100%;
+}
+
+/* ============================================================
+   Typography Defaults
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--c-blue);
+  text-decoration: none;
+  transition: color 0.25s var(--ease-out);
+}
+a:hover { color: var(--c-silver); }
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--c-dark); }
+::-webkit-scrollbar-thumb { background: var(--c-faint); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-muted); }
+
+/* ============================================================
+   LOADING SCREEN
+   ============================================================ */
+
+/* Outer mask text (used by name base — background clipped) */
+.loading-mask-text {
+  font-size: clamp(3rem, 12vw, 10rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background-image: url(/backgrounds/hero-bg.png);
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: white;
+}
+
+/* Both parts in one row, equal size */
+.loading-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+  white-space: nowrap;
+}
+
+/* "Prerith.M" — background clip */
+.loading-name-base {
+  font-size: clamp(2.2rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background-image: url(/backgrounds/hero-bg.png);
+  background-size: 300% 300%;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: white;
+  display: inline-block;
+  will-change: transform;
+}
+
+/* "'s Profile" — same size, plain white/muted */
+.loading-name-suffix {
+  font-size: clamp(2.2rem, 8vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.55);
+  display: inline-block;
+}
+
+/* Gear SVG dissolve animation */
+.loading-gear-svg {
+  animation: gear-spin 12s linear infinite;
+  filter: drop-shadow(0 0 24px rgba(180,200,255,0.15));
+}
+
+@keyframes gear-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   HERO + NAME
+   ============================================================ */
+.hero-bg {
+  /* Very subtle dark overlay — we let the 3D scene be the hero */
+  background: radial-gradient(ellipse at 50% 60%, rgba(80, 100, 160, 0.08) 0%, transparent 70%);
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--c-white);
+  /* Subtle metallic gradient */
+  background: linear-gradient(170deg, #ffffff 0%, #c8c8d8 50%, #a0a0b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.5em;
+}
+
+/* ============================================================
+   QUOTE
+   ============================================================ */
+.quote-container {
+  text-align: center;
+  max-width: 680px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Opening / closing marks */
+.quote-open-mark,
+.quote-close-mark {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: Georgia, serif;
+  user-select: none;
+  align-self: flex-start;
+}
+.quote-close-mark {
+  align-self: flex-end;
+}
+
+/* Quote text block — wraps naturally, centered */
+.quote-text-glass {
+  font-size: clamp(0.88rem, 1.5vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  white-space: normal;           /* allow wrapping */
+  text-align: center;
+  display: block;
+  font-style: italic;
+}
+
+/* Each letter — glass / transparent effect */
+.ql {
+  display: inline;
+  will-change: opacity, transform, filter;
+  background: linear-gradient(
+    175deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(200, 220, 255, 0.75) 45%,
+    rgba(160, 195, 245, 0.85) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(160, 200, 255, 0.3));
+}
+
+.ql-space {
+  display: inline;
+}
+
+/* Fallback selectors */
+.quote-text {
+  font-size: clamp(0.875rem, 1.6vw, 1.2rem);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.65);
+}
+.quote-word {
+  display: inline-block;
+  will-change: opacity, transform;
+  white-space: nowrap;
+}
+
+.quote-word {
+  display: inline-block;
+  will-change: opacity, transform;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+.about-section {
+  height: 100%;
+  background: var(--c-black);
+  padding: clamp(4rem, 10vh, 6rem) clamp(1.5rem, 5vw, 6rem) clamp(2rem, 4vh, 4rem);
+  padding-top: calc(64px + clamp(2rem, 4vh, 4rem));
+  display: flex;
+  align-items: center;
+}
+
+.about-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-inner--split {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .about-inner--split {
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+}
+
+.about-heading {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--c-white);
+  margin-bottom: 2rem;
+}
+
+.about-body {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.25rem;
+}
+
+.about-link {
+  display: inline-block;
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-weight: 500;
+  color: var(--c-blue);
+  letter-spacing: 0.01em;
+  margin-bottom: 2rem;
+  position: relative;
+  transition: color 0.25s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.about-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s var(--ease-out);
+}
+
+.about-link:hover {
+  color: var(--c-silver);
+  transform: translateX(4px);
+}
+
+.about-link:hover::after { width: 100%; }
+
+/* ── Text-only clean layout ── */
+.about-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.about-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 640px;
+}
+
+.about-intro {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+  /* Keep on one line on large screens, allow wrap on mobile */
+  white-space: normal;
+}
+
+@media (min-width: 900px) {
+  .about-intro {
+    white-space: nowrap;
+    font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  }
+}
+
+.about-cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 2.5rem;
+}
+
+@media (min-width: 700px) {
+  .about-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.about-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-col-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  font-weight: 500;
+}
+
+/* ── Scroll down button — centered at bottom ── */
+.scroll-down-btn {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.scroll-down-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.scroll-down-btn:hover .scroll-down-label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.scroll-chevron-wrap {
+  animation: chevron-bounce 2.2s ease-in-out infinite;
+}
+
+.scroll-chevron {
+  display: block;
+}
+
+@keyframes chevron-bounce {
+  0%, 100% { transform: translateY(0);   opacity: 1; }
+  50%       { transform: translateY(5px); opacity: 0.5; }
+}
+
+/* ============================================================
+   CONTACT SECTION
+   ============================================================ */
+.contact-section {
+  flex: 1; /* fills space above footer in snap-section--last */
+  background: var(--c-black);
+  padding: clamp(3rem, 6vh, 6rem) clamp(1.5rem, 5vw, 4rem) 1.5rem;
+  padding-top: calc(64px + clamp(2rem, 4vh, 4rem)); /* fixed header offset */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-inner {
+  max-width: 720px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.contact-line {
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+
+.contact-tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  line-height: 1.65;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.01em;
+}
+
+.contact-email-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact-email-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.contact-email-btn:hover {
+  transform: scale(1.02);
+}
+
+.contact-email-text {
+  font-size: clamp(1.25rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-white);
+  transition: color 0.25s var(--ease-out);
+}
+
+.contact-email-btn:hover .contact-email-text {
+  color: var(--c-blue);
+}
+
+.contact-email-btn--copied .contact-email-text {
+  color: #4ade80;
+}
+
+.contact-copy-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.25s;
+}
+
+.contact-copy-hint--visible {
+  color: #4ade80;
+}
+
+.contact-footer {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* ============================================================
+   SNAP SCROLL SYSTEM
+   ============================================================ */
+
+/* The scroll container — this is the <main> element */
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: none;
+  /* Hide scrollbar visually but keep it functional */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.snap-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Every full-page section */
+.snap-section {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always; /* Cannot stop between sections */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Last section holds both Contact + Footer — slightly taller */
+.snap-section--last {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ============================================================
+   HEADER — Apple liquid glass floating pill
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  /* No background — the nav pill carries it */
+  pointer-events: none; /* let clicks pass except on the nav */
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: calc(100% - 2rem);
+  max-width: none;
+  margin: 0 auto;
+  pointer-events: auto;
+
+  /* ── Liquid glass pill ── */
+  padding: 0.45rem 0.65rem;
+  border-radius: 999px;
+
+  /* Deep frosted glass — more dissolved */
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+
+  /* Light refraction border — subtle */
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom-color: rgba(255, 255, 255, 0.03);
+
+  /* Softer inner highlight */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 4px 24px rgba(0, 0, 0, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.site-header--scrolled .header-nav {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Center logo pill ── */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.42rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.header-logo-text {
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+}
+
+/* ── Pill nav buttons ── */
+.header-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.18s ease;
+}
+
+.header-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.header-pill:active {
+  transform: translateY(0);
+}
+
+.header-pill-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-pill-label {
+  font-size: 0.83rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .site-header {
+    top: 0.75rem;
+  }
+  .header-nav {
+    padding: 0.4rem 0.5rem;
+    gap: 0.5rem;
+    width: calc(100% - 1rem);
+    max-width: none;
+  }
+  .header-pill {
+    padding: 0.4rem 0.65rem;
+  }
+  .header-pill-label {
+    display: none;
+  }
+  .header-logo-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-footer {
+  width: 100%;
+  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  flex-shrink: 0;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-wordmark {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-link-label {
+  font-size: 0.78rem;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.22);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE  (max-width: 640px)
+   Premium experience on small screens
+   ============================================================ */
+@media (max-width: 640px) {
+
+  /* Loading — scale row so it fits on narrow screens */
+  .loading-name-row {
+    gap: 0.12em;
+    transform-origin: center center;
+  }
+  .loading-name-base,
+  .loading-name-suffix {
+    font-size: clamp(1.6rem, 10vw, 3.5rem);
+    letter-spacing: -0.03em;
+  }
+
+  /* Hero name */
+  .hero-name {
+    font-size: clamp(1.8rem, 8vw, 3.5rem);
+  }
+
+  /* Quote — shrink so it fits on one visible line */
+  .quote-container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  .quote-text-glass {
+    font-size: clamp(0.6rem, 3.2vw, 0.9rem);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* About — stack single column, tighten spacing */
+  .about-section {
+    padding: 5rem 1.25rem 2rem;
+    align-items: flex-start;
+  }
+  .about-layout {
+    gap: 2rem;
+  }
+  .about-top {
+    max-width: 100%;
+  }
+  .about-heading {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .about-intro {
+    white-space: normal;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .about-cols {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding-top: 1.75rem;
+  }
+  .about-col-label {
+    font-size: 0.68rem;
+  }
+  .about-body {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  /* Contact — tighten text sizes */
+  .contact-tagline {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .contact-email-text {
+    font-size: 1.1rem;
+  }
+
+  /* Scroll chevron — bring closer to edge on mobile */
+  .scroll-chevron-wrap {
+    transform: scale(0.9);
+  }
+}
+
+/* ============================================================
+   TABLET  (641px – 900px)
+   ============================================================ */
+@media (min-width: 641px) and (max-width: 900px) {
+  .about-section {
+    padding: 5.5rem 2rem 2.5rem;
+  }
+  .about-cols {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .quote-text-glass {
+    font-size: clamp(0.7rem, 2vw, 1rem);
+  }
+  .loading-name-base,
+  .loading-name-suffix {
+    font-size: clamp(2rem, 6vw, 5rem);
+  }
+}
